@@ -1,24 +1,40 @@
-# Compiled Object files
-*.o
-*.obj
+#ignore files
+# OS generated files #
+######################
+DS_Store
+.DS_Store
+.vscode
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
+# Compiled source #
+###################
+*.com
+*.class
 *.dll
-
-# Compiled Static libraries
-*.a
-*.lib
-
-# Executables
 *.exe
+*.o
+*.so
 
-# DUB
-.dub
-docs.json
-__dummy.html
-docs/
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
 
-# Code coverage
-*.lst
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
