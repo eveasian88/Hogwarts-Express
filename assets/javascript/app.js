@@ -72,10 +72,27 @@ $("#add-train").on("click", function () {
     }
 
   // code for handling the push
-});
+    database.ref().push({
+        trainName: trainName,
+        destination: destination,
+        firstTrainTime: firstTrainTime,
+        frequency: frequency,
+        minutesAway: minutesAway,
+        nextArrival: nextArrival,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    alert("Your Wish Has Been Granted!");
+
   // empty text input
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#train-time").val("");
+    $("#frequency").val("");
 
   // don't refresh the page
+    return;
+});
 
   // firebase watcher + initial loader HINT: this code behaves similarly to .on("child_added")
 

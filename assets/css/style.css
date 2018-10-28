@@ -1,5 +1,5 @@
 .jumbotron{
-    background-image: url("../images/nightTrain.gif");
+    background-image: url("../images/hogwartsExpress.jpg");
     /* background-repeat: no-repeat; */
     background-position: center;
     background-color: rgb(19, 21, 18);
@@ -8,10 +8,10 @@
 
 .jumbotron h1 {
     color: goldenrod;
-    font-family: 'Amita', cursive;
+    font-family: 'Quintessential', cursive;
 }
 
-h3 {
+h4 {
     color: white;
     font-family: 'Meddon', cursive; 
     /* need to change size in media queries */
@@ -19,7 +19,7 @@ h3 {
 
 h5 {
     color: goldenrod;
-    font-family: 'Meddon', cursive;
+    font-family: 'Quintessential', cursive;
 }
 
 .card-header {
