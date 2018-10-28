@@ -1,14 +1,18 @@
 .jumbotron{
-	background-image: url("../images/JE7TYUYMDMZ4TNQEQ27SLQ4TA4.jpg");
+    background-image: url("../images/nightTrain.gif");
+    /* background-repeat: no-repeat; */
+    background-position: center;
+    height: 220px;
 }
 
 .jumbotron h1 {
     color: goldenrod;
-    font-family: font-family: 'Meddon', cursive;
+    font-family: 'Amita', cursive;
 }
 
 h3 {
-    color; #fffff;
+    color: white;
+    font-family: 'Meddon', cursive;
 }
 
 .fa-train{
@@ -16,5 +20,6 @@ h3 {
 }
 
 h5 {
-	color: goldenrod;
+    color: goldenrod;
+    font-family: 'Amita', cursive;
 }
