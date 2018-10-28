@@ -1,4 +1,4 @@
-// initialize firebase
+// initialize Firebase
 var config = {
     apiKey: "AIzaSyBb_VvgidrYsaUud7zcbTIDCthA_EfNwPo",
     authDomain: "demoproject-40b0e.firebaseapp.com",
@@ -47,19 +47,32 @@ $("#add-train").on("click", function () {
     // first time pushed back a year to make sure it comes back before current time
     var firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
     console.log("FTC: " + firstTimeConverted);
-});
-  // difference between the times
 
-  // time apart
+  // difference between the times
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("Difference in time: " + diffTime);
+
+  // time apart (remainder)
+    var tRemainder = diffTime % frequency;
+    console.log(tRemainder);
 
   // minute until train arrives
+    var minutesAway = frequency - tRemainder;
 
   // next train
+    var nextTrain = moment().add(minutesAway, "minutes");
+    console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
 
   // arrival time
+    var nextArrival = moment(nextTrain).format("hh:mm a");
+
+    var nextArrivalUpdate = function() {
+        date = moment(new Date())
+        datetime.html(date.format("hh:mm a"));
+    }
 
   // code for handling the push
-
+});
   // empty text input
 
   // don't refresh the page

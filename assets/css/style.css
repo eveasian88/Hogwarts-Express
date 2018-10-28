@@ -1,7 +1,7 @@
 .jumbotron{
     background-image: url("../images/nightTrain.gif");
-    background-repeat: no-repeat;
-    background-position: left;
+    /* background-repeat: no-repeat; */
+    background-position: center;
     background-color: rgb(19, 21, 18);
     height: 230px;
 }
@@ -13,9 +13,9 @@
 
 h3 {
     color: white;
-    font-family: 'Meddon', cursive;
+    font-family: 'Meddon', cursive; 
+    /* need to change size in media queries */
 }
-
 
 h5 {
     color: goldenrod;
