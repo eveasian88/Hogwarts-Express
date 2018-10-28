@@ -35,10 +35,19 @@ $(document).ready(function () {
     setInterval(update, 1000);
 });
 
-  // capture button click
+// capture button click
+$("#add-train").on("click", function () {
 
-  // grab values from text boxes
+    // grab values from text boxes
+    trainName = $("#train-name").val().trim();
+    destination = $("#destination").val().trim();
+    firstTrainTime = $("#train-time").val().trim();
+    frequency = $("#frequency").val().trim();
 
+    // first time pushed back a year to make sure it comes back before current time
+    var firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
+    console.log("FTC: " + firstTimeConverted);
+});
   // difference between the times
 
   // time apart
