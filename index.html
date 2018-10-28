@@ -24,79 +24,67 @@
         <div class="jumbotron text-center">
             <i class="fa fa-5x fa-train"></i>
             <h1>~HOGWARTS EXPRESS~</h1>
-            <h3>Go Anywhere in the Muggle World</h3>
+            <h3>~Takes You Anywhere in the Muggle World~</h3>
             <h5>today is <span id="current-status"></span></h5>
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <!-- <div class="container"> -->
-                <div class="panel-group">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Add Train</div>
-                        <form>
-                            <div class="container-fluid">
-                                <div class="form-group">
-                                    <label for="train-name">Train Name</label>
-                                    <input type="text" class="form-control" id="train-name" placeholder="Red line">
-                                </div>
-                                <div class="form-group">
-                                    <label for="destination">Destination</label>
-                                    <input type="text" class="form-control" id="destination" placeholder="Broadway">
-                                </div>
-                                <div class="form-group">
-                                    <label for="train-time">First Train Time (HH:mm, AM/PM)</label>
-                                    <input type="time" class="form-control" id="train-time" placeholder="16:45">
-                                </div>
-                                <div class="form-group">
-                                    <label for="frequency">
-                                        Frequency (mins)</label>
-                                    <input type="text" class="form-control" id="frequency" placeholder="15">
-                                </div>
-                                <button class="btn btn-primary" id="add-train" type="submit">Submit</button>
-                                <br><br>
-                            </div>
-                        </form>
-                    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    Add Train
                 </div>
-                <!-- </div> -->
-            </div>
-
-            <div class="col-md-9">
-                <div class="container-fluid">
-                    <!-- <div class="panel-group"> -->
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Platform 9 3/4 Train Schedule
-                            <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-refresh"></span>
-                                Refresh</button></div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th><strong>Train Name</strong></th>
-                                            <th><strong>Destination</strong></th>
-                                            <th><strong>Frequency (min)</strong></th>
-                                            <th><strong>Next Arrival</strong></th>
-                                            <th><strong>Minutes Away</strong></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="new-train">
-
-                                    </tbody>
-                                </table>
-                            </div>
+                <div class="card-body">
+                    <!-- Sign-up Form (note the various input "types")-->
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name-input">Train Name</label>
+                            <input class="form-control" id="name-input" type="text">
                         </div>
-                    </div>
-                    <!-- </div> -->
+                        <div class="form-group">
+                            <label for="role-input">Muggle World Destination</label>
+                            <input class="form-control" id="role-input" type="role">
+                        </div>
+                        <div class="form-group">
+                            <label for="startdate-input">First Train Hour (HH:mm,AP/PM</label>
+                            <input class="form-control" id="startdate-input" type="number">
+                        </div>
+                        <div class="form-group">
+                            <label for="rate-input">Frequency in Muggle Minutes</label>
+                            <textarea class="form-control" id="rate-input" type="number"></textarea>
+                        </div>
+                        <button class="btn btn-default" id="add-user" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- current train schedule-->
+            <div class="card mb-4">
+                <div class="card-header">Platform 9 3/4 Train Schedule</div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover" id='employee-table'>
+                        <thead>
+                            <tr>
+                                <th scope="col">Train Name</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Frequency (mins)</th>
+                                <th scope="col">Next Arrival</th>
+                                <th scope="col">Minutes Away</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-
+    </div>
+    </div><!-- extra div to wrap card-->
+    
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

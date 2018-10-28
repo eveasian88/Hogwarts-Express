@@ -1,8 +1,9 @@
 .jumbotron{
     background-image: url("../images/nightTrain.gif");
-    /* background-repeat: no-repeat; */
-    background-position: center;
-    height: 220px;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-color: rgb(19, 21, 18);
+    height: 230px;
 }
 
 .jumbotron h1 {
@@ -15,11 +16,16 @@ h3 {
     font-family: 'Meddon', cursive;
 }
 
-.fa-train{
-	color: saddlebrown;
-}
 
 h5 {
     color: goldenrod;
     font-family: 'Meddon', cursive;
+}
+
+.card-header {
+    background-color: goldenrod;
+}
+
+.btn-default {
+    background-color: goldenrod;
 }
