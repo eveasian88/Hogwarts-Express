@@ -11,7 +11,7 @@ var config = {
 
 firebase.initializeApp(config);
 
-var dataRef = firebase.database();
+var database = firebase.database();
 
 // initial values
 var trainName = "";
@@ -44,32 +44,32 @@ $("#add-train").on("click", function (event) {
     // grab values from text boxes
     trainName = $("#train-name").val().trim();
     destination = $("#destination").val().trim();
-    firstTrainHour = moment($("#train-time").val().trim(), "MM/DD/YYYY").format("X");
+    firstTrainHour = $("#train-time").val().trim();
     frequency = $("#frequency").val().trim();
 
     // first time pushed back a year to make sure it comes back before current time
-    var firstTimeConverted = moment(firstTrainHour, "HH:mm").subtract(1, "years");
+    var firstTimeConverted = moment(firstTrainHour, "hh:mm").subtract(1, "years");
     console.log("FTC: " + firstTimeConverted);
 
     // difference between the times
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("Difference in time: " + diffTime);
+    // console.log("Difference in time: " + diffTime);
 
     // time apart (remainder)
     var tRemainder = diffTime % frequency;
-    console.log(tRemainder);
+    // console.log(tRemainder);
 
     // minute until train arrives
     var minutesAway = frequency - tRemainder;
+    // console.log("Minutes away: " + minutesAway);
 
     // next train
     var nextTrain = moment().add(minutesAway, "minutes");
-    console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
+    // console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
 
     // arrival time
     var nextArrival = moment(nextTrain).format("hh:mm a");
 
-    // possible to delete this section
     var nextArrivalUpdate = function () {
         date = moment(new Date())
         datetime.html(date.format("hh:mm a"));
@@ -100,93 +100,55 @@ $("#add-train").on("click", function (event) {
 });
 
 // delete function 
-$("#submit").on("click", function (event) {
-    event.preventDefault();
+// $(document).on("click", ".delete", function(){
+//   var confirmDelete = confirm("Are you sure you want to cancel your wish?");
 
-    if ($("#train-name").val().trim() === "" ||
-        $("#destination").val().trim() === "" ||
-        $("#train-time").val().trim() === "" ||
-        $("#frequency").val().trim() === "") {
-
-        alert("Please fill in all details to add a new train");
-
-    } else {
-
-        trainName = $("#train-name").val().trim();
-        destination = $("#destination").val().trim();
-        firstTrainHour = $("#train-time").val().trim();
-        frequency = $("#frequency").val().trim();
-
-        $(".form-field").val("");
-
-        database.ref().push({
-            trainName: trainName,
-            destination: destination,
-            frequency: frequency,
-            firstTrainHour: firstTrainHour,
-            dateAdded: firebase.database.ServerValue.TIMESTAMP
-        });
-
-        sessionStorage.clear();
-    }
-
-});
+//    if (confirmDelete){
+//     var entry = $(this).attr("data-index");
+//     database.ref().child(trainIDs[entry]).remove();
+//     location.reload();
+//    } else{
+//      return false;
+//    }
+// });
 
 
 // firebase watcher + initial loader HINT
-dataRef.ref().on("child_added", function (childSnapshot) {
-    
-    console.log("childSnapshot", childSnapshot.val());
-    console.log(childSnapshot.val().trainName);
-    console.log(childSnapshot.val().destination);
-    console.log(childSnapshot.val().firstTrainHour);
-    console.log(childSnapshot.val().frequency);
-
-})
+database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) {
 
 
-// HTML to reflect 
-var newrow = $("<tr>");
-newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
-newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
-newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
-newrow.append($("<td class='text-center'>" + moment(nextTrain).format("LT") + "</td>"));
-newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
-newrow.append($("<td class='text-center'><button class='arrival btn btn-danger btn-xs' data-key='" + key + "'>X</button></td>"));
-
-if (minToArrival < 6) {
-    newrow.addClass("info");
-}
-
-$("#train-table-rows").append(newrow);
+    console.log("Train name: " + snapshot.val().trainName);
+    console.log("Destination: " + snapshot.val().destination);
+    console.log("First train: " + snapshot.val().firstTrainTime);
+    console.log("Frequency: " + snapshot.val().frequency);
+    console.log("Next train: " + snapshot.val().nextArrival);
+    console.log("Minutes away: " + snapshot.val().minutesAway);
+    console.log("=====");
 
 
-$(document).on("click", ".arrival", function () {
-    keyref = $(this).attr("data-key");
-    database.ref().child(keyref).remove();
-    window.location.reload();
-});
+  // Change the HTML to reflect
+  $("#new-train").append("<tr><td>" + snapshot.val().trainName + "</td>" +
+    "<td>" + snapshot.val().destination + "</td>" + 
+    "<td>" + "Every " + snapshot.val().frequency + " mins" + "</td>" + 
+    "<td>" + snapshot.val().nextArrival + "</td>" +
+    "<td>" + snapshot.val().minutesAway + " mins until arrival" + "</td>" + "</td></tr>");
 
-  currentTime();
+  index++;
 
-  setInterval(function() {
-    window.location.reload();
-    // test stops here
-
-// handle errors
+  // handle the errors
   }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
-});
+  });
 
-// gets train IDs in an array
-database.ref().once('value', function (dataSnapshot) {
+  // gets the train IDs in an Array
+  database.ref().once('value', function(dataSnapshot){ 
     var trainIndex = 0;
 
-    dataSnapshot.forEach(
-        function (childSnapshot) {
-            trainIDs[trainIndex++] = childSnapshot.key();
-        }
-    );
-});
+      dataSnapshot.forEach(
+          function(childSnapshot) {
+              trainIDs[trainIndex++] = childSnapshot.key();
+          }
+      );
+  });
 
-console.log(trainIDs);
+  console.log(trainIDs);

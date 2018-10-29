@@ -22,10 +22,12 @@ h5 {
     font-family: 'Meddon', cursive;
 }
 
-.card-header {
-    background-color: goldenrod;
+.card-header,
+.btn-default {
+    background-color: rgb(113, 15, 15);
+    color: white;
 }
 
-.btn-default {
-    background-color: goldenrod;
-}
+/* .btn-default {
+    background-color: rgb(113, 15, 15);
+} */
