@@ -11,7 +11,7 @@ var config = {
 
 firebase.initializeApp(config);
 
-var database = firebase.database();
+var dataRef = firebase.database();
 
 // initial values
 var trainName = "";
@@ -38,7 +38,8 @@ $(document).ready(function () {
 });
 
 // capture button click
-$("#add-train").on("click", function () {
+$("#add-train").on("click", function (event) {
+    event.preventDefault();
 
     // grab values from text boxes
     trainName = $("#train-name").val().trim();
@@ -76,6 +77,7 @@ $("#add-train").on("click", function () {
 
     // code for handling the push
     database.ref().push({
+
         trainName: trainName,
         destination: destination,
         firstTrainHour: firstTrainHour,
@@ -132,9 +134,9 @@ $("#submit").on("click", function (event) {
 
 
 // firebase watcher + initial loader HINT
-DataTransfer.ref().on("child_added", function (childSnapshot) {
+dataRef.ref().on("child_added", function (childSnapshot) {
+    
     console.log("childSnapshot", childSnapshot.val());
-
     console.log(childSnapshot.val().trainName);
     console.log(childSnapshot.val().destination);
     console.log(childSnapshot.val().firstTrainHour);
@@ -143,28 +145,20 @@ DataTransfer.ref().on("child_added", function (childSnapshot) {
 })
 
 
-    var startTimeConverted = moment(childSnapshot.val().startTime, "hh:mm").subtract(1, "years");
-    var timeDiff = moment().diff(moment(startTimeConverted), "minutes");
-    var timeRemain = timeDiff % childSnapshot.val().frequency;
-    var minToArrival = childSnapshot.val().frequency - timeRemain;
-    var nextTrain = moment().add(minToArrival, "minutes");
-    var key = childSnapshot.key;
+// HTML to reflect 
+var newrow = $("<tr>");
+newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
+newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
+newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
+newrow.append($("<td class='text-center'>" + moment(nextTrain).format("LT") + "</td>"));
+newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
+newrow.append($("<td class='text-center'><button class='arrival btn btn-danger btn-xs' data-key='" + key + "'>X</button></td>"));
 
+if (minToArrival < 6) {
+    newrow.addClass("info");
+}
 
-    // HTML to reflect 
-    var newrow = $("<tr>");
-    newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
-    newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
-    newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
-    newrow.append($("<td class='text-center'>" + moment(nextTrain).format("LT") + "</td>"));
-    newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
-    newrow.append($("<td class='text-center'><button class='arrival btn btn-danger btn-xs' data-key='" + key + "'>X</button></td>"));
-
-    if (minToArrival < 6) {
-        newrow.addClass("info");
-    }
-
-    $("#train-table-rows").append(newrow);
+$("#train-table-rows").append(newrow);
 
 
 $(document).on("click", ".arrival", function () {
@@ -173,16 +167,16 @@ $(document).on("click", ".arrival", function () {
     window.location.reload();
 });
 
-//   currentTime();
+  currentTime();
 
-//   setInterval(function() {
-//     window.location.reload();
-//     // test stops here
+  setInterval(function() {
+    window.location.reload();
+    // test stops here
 
-// // handle errors
-// function(errorObject) {
-//     console.log("Errors handled: " + errorObject.code);
-// };
+// handle errors
+  }, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+});
 
 // gets train IDs in an array
 database.ref().once('value', function (dataSnapshot) {
