@@ -112,9 +112,8 @@ $("#submit").on("click", function (event) {
 //    }
 // });
 
-// the line below has a syntax error "HINT" doesn't turn the right color
-firebase watcher + initial loader HINT
 
+// firebase watcher + initial loader HINT
 database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) {
 
     console.log("Train Name: " + snapshot.val().trainName);
@@ -123,17 +122,21 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     console.log("Frequency: " + snapshot.val().frequency);
     console.log("Next Train: " + snapshot.val().nextArrival);
     console.log("Minutes Away: " + snapshot.val().minutesAway);
-    console.log("=====");
+    console.log("=============================================");
 
 
   // Change the HTML to reflect
-  $("#new-train > tbody").append("<tr><td>" + snapshot.val().trainName + "</td>" +
+  $("#train-table>").append("<tr><td>" + snapshot.val().trainName + "</td>" +
     "<td>" + snapshot.val().destination + "</td>" + 
     "<td>" + "Every " + snapshot.val().frequency + " mins" + "</td>" + 
     "<td>" + snapshot.val().nextArrival + "</td>" +
     "<td>" + snapshot.val().minutesAway + " mins until arrival" + "</td>" + "</td></tr>");
 
-  index++;
+index++;
+
+// add each train's data into the table (alternate version to above)
+// $("#train-table > tbody").append("<tr><td>" + trainName + "</tr><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextTrain + "</td><td>" + nextArrival + "</td></tr>");
+
 
   // handle the errors
   }, function(errorObject) {
@@ -142,13 +145,18 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
 
   // gets the train IDs in an array
   database.ref().once('value', function(dataSnapshot){ 
+    var key = dataSnapshot.key;
     var trainIndex = 0;
 
       dataSnapshot.forEach(
           function(snapshot) {
-              trainIDs[trainIndex++] = snapshot.key();
+              trainIDs[trainIndex++] = snapshot.key;
           }
       );
   });
 
   console.log(trainIDs);
+
+  // typeError: snapshot.key is not a function (line 152, 150)
+
+  

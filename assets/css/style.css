@@ -1,8 +1,11 @@
+body {
+    background-color: rgb(233, 198, 110);
+}
 .jumbotron{
     background-image: url("../images/nightTrain.gif");
-    /* background-repeat: no-repeat; */
-    background-position: center;
-    background-color: rgb(19, 21, 18);
+    background-repeat: space;
+    background-position: left; 
+    background-color: rgb(10, 11, 9);
     height: 230px;
 }
 
