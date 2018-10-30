@@ -4,10 +4,10 @@ var config = {
     authDomain: "hogwartsexpress-75b44.firebaseapp.com",
     databaseURL: "https://hogwartsexpress-75b44.firebaseio.com",
     projectId: "hogwartsexpress-75b44",
-    storageBucket: "",
-    messagingSenderId: "456587058142",
-};
-
+    storageBucket: "hogwartsexpress-75b44.appspot.com",
+    messagingSenderId: "456587058142"
+  };
+ 
 firebase.initializeApp(config);
 
 var database = firebase.database();
@@ -113,7 +113,7 @@ $("#submit").on("click", function (event) {
 // });
 
 // the line below has a syntax error "HINT" doesn't turn the right color
-// firebase watcher + initial loader HINT
+firebase watcher + initial loader HINT
 
 database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) {
 
@@ -127,7 +127,7 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
 
 
   // Change the HTML to reflect
-  $("#new-train").append("<tr><td>" + snapshot.val().trainName + "</td>" +
+  $("#new-train > tbody").append("<tr><td>" + snapshot.val().trainName + "</td>" +
     "<td>" + snapshot.val().destination + "</td>" + 
     "<td>" + "Every " + snapshot.val().frequency + " mins" + "</td>" + 
     "<td>" + snapshot.val().nextArrival + "</td>" +
@@ -136,7 +136,6 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
   index++;
 
   // handle the errors
-  // currently permission denied
   }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code); 
   });
@@ -146,8 +145,8 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     var trainIndex = 0;
 
       dataSnapshot.forEach(
-          function(childSnapshot) {
-              trainIDs[trainIndex++] = childSnapshot.key();
+          function(snapshot) {
+              trainIDs[trainIndex++] = snapshot.key();
           }
       );
   });
