@@ -25,9 +25,5 @@ h5 {
 .card-header,
 .btn-default {
     background-color: rgb(113, 15, 15);
-    color: white;
+    color: goldenrod;
 }
-
-/* .btn-default {
-    background-color: rgb(113, 15, 15);
-} */

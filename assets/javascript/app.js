@@ -6,7 +6,6 @@ var config = {
     projectId: "hogwartsexpress-75b44",
     storageBucket: "",
     messagingSenderId: "456587058142",
-    storageBucket: ""
 };
 
 firebase.initializeApp(config);
@@ -38,8 +37,9 @@ $(document).ready(function () {
 });
 
 // capture button click
-$("#add-train").on("click", function (event) {
+$("#submit").on("click", function (event) {
     event.preventDefault();
+    console.log("button has been clicked");
 
     // grab values from text boxes
     trainName = $("#train-name").val().trim();
@@ -76,7 +76,7 @@ $("#add-train").on("click", function (event) {
     }
 
     // code for handling the push
-    database.ref().push({
+    database.ref().push(JSON.stringify({
 
         trainName: trainName,
         destination: destination,
@@ -85,7 +85,7 @@ $("#add-train").on("click", function (event) {
         minutesAway: minutesAway,
         nextArrival: nextArrival,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
-    });
+    }));
 
     alert("Your Wish Has Been Granted!");
 
@@ -95,11 +95,11 @@ $("#add-train").on("click", function (event) {
     $("#train-time").val("");
     $("#frequency").val("");
 
-    // // don't refresh the page
-    return;
+    // don't refresh the page
+    return false;
 });
 
-// delete function 
+// delete function not finished
 // $(document).on("click", ".delete", function(){
 //   var confirmDelete = confirm("Are you sure you want to cancel your wish?");
 
@@ -112,17 +112,17 @@ $("#add-train").on("click", function (event) {
 //    }
 // });
 
-
+// the line below has a syntax error "HINT" doesn't turn the right color
 // firebase watcher + initial loader HINT
+
 database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) {
 
-
-    console.log("Train name: " + snapshot.val().trainName);
+    console.log("Train Name: " + snapshot.val().trainName);
     console.log("Destination: " + snapshot.val().destination);
-    console.log("First train: " + snapshot.val().firstTrainTime);
+    console.log("First Train: " + snapshot.val().firstTrainHour);
     console.log("Frequency: " + snapshot.val().frequency);
-    console.log("Next train: " + snapshot.val().nextArrival);
-    console.log("Minutes away: " + snapshot.val().minutesAway);
+    console.log("Next Train: " + snapshot.val().nextArrival);
+    console.log("Minutes Away: " + snapshot.val().minutesAway);
     console.log("=====");
 
 
@@ -136,11 +136,12 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
   index++;
 
   // handle the errors
+  // currently permission denied
   }, function(errorObject) {
-    console.log("Errors handled: " + errorObject.code);
+    console.log("Errors handled: " + errorObject.code); 
   });
 
-  // gets the train IDs in an Array
+  // gets the train IDs in an array
   database.ref().once('value', function(dataSnapshot){ 
     var trainIndex = 0;
 
