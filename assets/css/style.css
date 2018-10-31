@@ -1,14 +1,14 @@
 body {
-    background-color: rgb(10, 11, 9);
-    /* background-image: url("../images/map.gif"); */
+    /* background-color: rgb(10, 11, 9); */
+    background-image: url("../images/map.gif");
 }
 
 .jumbotron {
-    background-image: url("../images/nightTrain.gif");
+    background-image: url("../images/hogwartsExpress.jpg");
     background-repeat: space;
-    background-position: left; 
+    /* background-position: left;  */
     background-color: rgb(10, 11, 9);
-    height: 230px;
+    height: 220px;
 }
 
 .jumbotron h1 {
