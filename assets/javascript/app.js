@@ -100,15 +100,15 @@ $("#submit").on("click", function (event) {
 });
 
 // delete function
-// //   var confirmDelete = confirm("Are you sure you want to cancel your wish?");
+// var confirmDelete = confirm("Are you sure you want to cancel your wish?");
 
-// //    if (confirmDelete){
-// //     var entry = $(this).attr("data-index");
-// //     database.ref().child(trainIDs[entry]).remove();
-// //     location.reload();
-// //    } else{
-// //      return false;
-// //    }
+// if (confirmDelete){
+//  var entry = $(this).attr("data-index");
+//  database.ref().child(trainIDs[entry]).remove();
+//  location.reload();
+//   } else{
+//     return false;
+//   }
 // });
 
 
