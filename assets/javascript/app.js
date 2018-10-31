@@ -111,8 +111,7 @@ $("#submit").on("click", function (event) {
 // });
 
 
-// firebase watcher + initial loader
-// code behaves similarly to .on("child_added")
+// firebase watcher + initial loader: code behaves similarly to .on("child_added")
 database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function (snapshot) {
 
     console.log("Train Name: " + snapshot.val().trainName);
@@ -121,13 +120,12 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     console.log("Frequency: " + snapshot.val().frequency);
     console.log("Next Train: " + snapshot.val().nextArrival);
     console.log("Minutes Away: " + snapshot.val().minutesAway);
-    console.log("===============");
 
-
+    
     // change the HTML to reflect
     $("#train-table>").append("<tr><td>" + snapshot.val().trainName + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
-        "<td>" + "Every " + snapshot.val().frequency + " mins" + "</td>" +
+        "<td>" + snapshot.val().frequency + " mins" + "</td>" +
         "<td>" + snapshot.val().nextArrival + "</td>" +
         "<td>" + snapshot.val().minutesAway + " mins until arrival" + "</td>" + "</td></tr>");
 
