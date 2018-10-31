@@ -75,7 +75,7 @@ $("#submit").on("click", function (event) {
     }
 
     // code for handling the push
-    database.ref().push(JSON.stringify({
+    database.ref().push({
         trainName: trainName,
         destination: destination,
         firstTrainHour: firstTrainHour,
@@ -83,7 +83,7 @@ $("#submit").on("click", function (event) {
         minutesAway: minutesAway,
         nextArrival: nextArrival,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
-    }));
+    });
 
     alert("Your Wish Has Been Granted!");
 
@@ -115,7 +115,7 @@ $("#submit").on("click", function (event) {
 database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function (snapshot) {
 
     console.log(snapshot.val());
-    
+
     console.log("Train Name: " + snapshot.val().trainName);
     console.log("Destination: " + snapshot.val().destination);
     console.log("First Train: " + snapshot.val().firstTrainHour);
@@ -125,6 +125,21 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
 
     
     // change the HTML to reflect
+    // let trainRow = $("<tr>");
+    // let trainName = $("<td>").text(snapshot.val().trainName);
+    // let destination = $("<td>").text(snapshot.val().destination);
+    // let frequency = $("<td>").text(snapshot.val().frequency);
+    // let nextArrival = $("<td>").text(snapshot.val().nextArrival);
+    // let minutesAway= $("<td>").text(snapshot.val().minutesAway);
+
+    // trainRow.append(trainName);
+    // trainRow.append(destination);
+    // trainRow.append(frequency);
+    // trainRow.append(nextArrival);
+    // trainRow.append(minutesAway);
+
+    // $("#train-table").append(trainRow);
+
     $("#train-table").append("<tr><td>" + snapshot.val().trainName + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
         "<td>" + snapshot.val().frequency + " mins" + "</td>" +
