@@ -1,9 +1,0 @@
-{
-  "trainName" : trainName,
-  "destination": destination,
-  "firstTrainHour": firstTrainHour,
-  "frequency": frequency,
-  "minutesAway": minutesAway,
-  "nextArrival": nextArrival,
-  "dateAdded": firebase.database.ServerValue.TIMESTAMP
-}
