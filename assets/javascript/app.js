@@ -94,7 +94,7 @@ $("#submit").on("click", function (event) {
     $("#frequency").val("");
 
     // don't refresh the page
-    return false;
+    return;
 });
 
 // delete function not finished yet
