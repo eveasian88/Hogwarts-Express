@@ -123,7 +123,7 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
 
     
     // change the HTML to reflect
-    $("#train-table>").append("<tr><td>" + snapshot.val().trainName + "</td>" +
+    $("#train-schedule-table").append("<tr><td>" + snapshot.val().trainName + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
         "<td>" + snapshot.val().frequency + " mins" + "</td>" +
         "<td>" + snapshot.val().nextArrival + "</td>" +
