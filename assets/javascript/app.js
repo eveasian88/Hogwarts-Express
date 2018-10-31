@@ -114,6 +114,8 @@ $("#submit").on("click", function (event) {
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
 database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function (snapshot) {
 
+    console.log(snapshot.val());
+    
     console.log("Train Name: " + snapshot.val().trainName);
     console.log("Destination: " + snapshot.val().destination);
     console.log("First Train: " + snapshot.val().firstTrainHour);
@@ -123,7 +125,7 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
 
     
     // change the HTML to reflect
-    $("#train-schedule-table").append("<tr><td>" + snapshot.val().trainName + "</td>" +
+    $("#train-table").append("<tr><td>" + snapshot.val().trainName + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
         "<td>" + snapshot.val().frequency + " mins" + "</td>" +
         "<td>" + snapshot.val().nextArrival + "</td>" +
