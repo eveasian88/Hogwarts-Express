@@ -159,20 +159,20 @@ database.ref().on("child_added", function(childSnapshot) {
     var nextArrival = moment().add(minToArrival, "minutes");
     var key = childSnapshot.key;
   
-    // rendering information to DOM to create new rows
+    // rendering information to DOM to dynamically create new rows
     var newrow = $("<tr>");
     newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
     newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
     newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
     newrow.append($("<td class='text-center'>" + moment(nextArrival).format("LT") + "</td>"));
     newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
-    newrow.append($("<td class='text-center'><button class='arrival btn btn-light btn-xs' data-key='" + key + "'>X</button></td>"));
+    newrow.append($("<td class='text-center'><button class='arrival btn btn-light btn-sm' data-key='" + key + "'>X</button></td>"));
   
     if (minToArrival < 6) {
       newrow.addClass("info");
     }
   
-    $("#train-table-rows").append(newrow);
+    $("#train-schedule-table").append(newrow);
   
   });
   
@@ -193,3 +193,4 @@ database.ref().on("child_added", function(childSnapshot) {
   // problems that needs to be resolved with this version:
   // next arrival now shows same time as current time
   // minutes away shows NaN
+  // after added media queries, frequency and time don't line up on schedule table

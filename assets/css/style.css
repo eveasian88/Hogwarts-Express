@@ -43,29 +43,57 @@ h5 {
 /* media queries */
 /* xs < 768 */ 
 @media screen and (max-width: 767px) { 
-    body { font-size: 0.7em; 
-    }
+    body, .btn-sm { font-size: 0.7em; 
+}
     .jumbotron h1{
         font-size: 2em;
-    }
+}
     h4, h5 {
       font-size: 1.0em;
-    }
-    #train-table-rows {
+}
+    #train-table-rows, #submit {
       font-size: 0.7em;
-    }
+}}
   
 
 /* sm */ 
-@media screen and (min-width: 768px) { 
-    body { font-size: 0.8em; 
-    }
+@media screen and (min-width: 768px) {
+    body, .btn-sm { font-size: 0.8em; 
+}
     .jumbotron h1{
-        font-size: 2em;
-    }
+        font-size: 2.5em;
+}
     h4, h5 {
-      font-size: 1em;
-    }
-    #train-table-rows{
+      font-size: 1.25em;
+}
+    #train-table-rows, #submit {
        font-size: 0.8em;
-      }
+}}
+
+/* md */ 
+@media screen and (min-width: 992px) { 
+    body, .btn-sm { font-size: 0.9em; 
+} 
+    .jumbotron h1 {
+      font-size: 2.75em;
+}
+    h4, h5 {
+        font-size: 1.75em;
+    }
+    #train-table-rows, #submit {
+        font-size: 0.9em;
+}} 
+  
+/* lg */ 
+@media screen and (min-width: 1200px) { 
+    body, .btn-sm { font-size: 1em; 
+} 
+    .jumbotron h1 {
+      font-size: 2.75em;
+}
+    h4, h5 {
+        font-size: 1.75em;
+}
+    #train-table-rows, #submit {
+        font-size: 1em;
+}}
