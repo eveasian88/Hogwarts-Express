@@ -63,11 +63,11 @@ $("#submit").on("click", function (event) {
     // console.log("Minutes away: " + minutesAway);
 
     // next train
-    var nextTrain = moment().add(minutesAway, "minutes");
-    // console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
+    var nextArrival = moment().add(minutesAway, "minutes");
+    // console.log("Arrival Time: " + moment(nextArrival).format("hh:mm"));
 
     // arrival time
-    var nextArrival = moment(nextTrain).format("hh:mm a");
+    var nextArrival = moment(nextArrival).format("hh:mm a");
 
     var nextArrivalUpdate = function () {
         date = moment(new Date())
@@ -86,8 +86,6 @@ $("#submit").on("click", function (event) {
     });
 
     alert("Your Wish Has Been Granted!");
-
-    sessionStorage.clear();
 
     // empty text input
     $("#train-name").val("");
@@ -113,42 +111,85 @@ $("#submit").on("click", function (event) {
 
 
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
-database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function (snapshot) {
+// database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function (snapshot) {
 
-    console.log(snapshot.val());
+//     console.log(snapshot.val());
 
-    console.log("Train Name: " + snapshot.val().trainName);
-    console.log("Destination: " + snapshot.val().destination);
-    console.log("First Train: " + snapshot.val().firstTrainHour);
-    console.log("Frequency: " + snapshot.val().frequency);
-    console.log("Next Train: " + snapshot.val().nextArrival);
-    console.log("Minutes Away: " + snapshot.val().minutesAway);
-
-
-    $("#train-table").append("<tr><td>" + snapshot.val().trainName + "</td>" +
-        "<td>" + snapshot.val().destination + "</td>" +
-        "<td>" + snapshot.val().frequency + " mins" + "</td>" +
-        "<td>" + snapshot.val().nextArrival + "</td>" +
-        "<td>" + snapshot.val().minutesAway + " mins until arrival" + "</td>" + "</td></tr>");
-
-    index++;
+//     console.log("Train Name: " + snapshot.val().trainName);
+//     console.log("Destination: " + snapshot.val().destination);
+//     console.log("First Train: " + snapshot.val().firstTrainHour);
+//     console.log("Frequency: " + snapshot.val().frequency);
+//     console.log("Next Train: " + snapshot.val().nextArrival);
+//     console.log("Minutes Away: " + snapshot.val().minutesAway);
 
 
-    // handle the errors
-}, function (errorObject) {
-    console.log("Errors handled: " + errorObject.code);
-});
+//     $("#train-table").append("<tr><td>" + snapshot.val().trainName + "</td>" +
+//         "<td>" + snapshot.val().destination + "</td>" +
+//         "<td>" + snapshot.val().frequency + " mins" + "</td>" +
+//         "<td>" + snapshot.val().nextArrival + "</td>" +
+//         "<td>" + snapshot.val().minutesAway + " mins until arrival" + "</td>" + "</td></tr>");
 
-// gets the train IDs in an array
-database.ref().once('value', function (dataSnapshot) {
-    var key = dataSnapshot.key;
-    var trainIndex = 0;
+//     index++;
 
-    dataSnapshot.forEach(
-        function (snapshot) {
-            trainIDs[trainIndex++] = snapshot.key;
-        }
-    );
-});
 
-console.log(trainIDs);
+//     // handle the errors
+// }, function (errorObject) {
+//     console.log("Errors handled: " + errorObject.code);
+// });
+
+// // gets the train IDs in an array
+// database.ref().once('value', function (dataSnapshot) {
+//     var key = dataSnapshot.key;
+//     var trainIndex = 0;
+
+//     dataSnapshot.forEach(
+//         function (snapshot) {
+//             trainIDs[trainIndex++] = snapshot.key;
+//         }
+//     );
+// });
+
+// console.log(trainIDs);
+
+database.ref().on("child_added", function(childSnapshot) {
+    var startTimeConverted = moment(childSnapshot.val().startTime, "hh:mm").subtract(1, "years");
+    var timeDiff = moment().diff(moment(startTimeConverted), "minutes");
+    var timeRemain = timeDiff % childSnapshot.val().frequency;
+    var minToArrival = childSnapshot.val().frequency - timeRemain;
+    var nextArrival = moment().add(minToArrival, "minutes");
+    var key = childSnapshot.key;
+  
+    // rendering information to DOM to create new rows
+    var newrow = $("<tr>");
+    newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
+    newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
+    newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
+    newrow.append($("<td class='text-center'>" + moment(nextArrival).format("LT") + "</td>"));
+    newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
+    newrow.append($("<td class='text-center'><button class='arrival btn btn-light btn-xs' data-key='" + key + "'>X</button></td>"));
+  
+    if (minToArrival < 6) {
+      newrow.addClass("info");
+    }
+  
+    $("#train-table-rows").append(newrow);
+  
+  });
+  
+  // delete button option
+  $(document).on("click", ".arrival", function() {
+    keyref = $(this).attr("data-key");
+    database.ref().child(keyref).remove();
+    window.location.reload();
+  });
+  
+  // currently shows syntax errors
+  currentTime();
+  
+  setInterval(function() {
+    window.location.reload();
+  }, 60000);
+
+  // problems that needs to be resolved with this version:
+  // next arrival now shows same time as current time
+  // minutes away shows NaN
