@@ -37,3 +37,43 @@ h5 {
     background-color: rgb(113, 15, 15);
     color: goldenrod;
 } */
+
+
+
+/* media queries */
+/* xs < 768 */ 
+@media screen and (max-width: 767px) { 
+    body { font-size: 0.7em; }
+    
+    h4, h5 {
+      font-size: 1.0em;
+      }
+  
+    #train-table-rows {
+      font-size: 0.7em;
+      }
+  
+
+/* sm */ 
+@media screen and (min-width: 768px) { 
+    body { font-size: 0.8em; }
+   
+    h4, h5 {
+      font-size: 1.5em;
+      }
+  
+    #train-table-rows{
+       font-size: 0.8em;
+      }
+
+/* md */ 
+@media screen and (min-width: 992px) { 
+    body { font-size: 0.9em; } 
+   
+    h4, h5 {
+      font-size: 2.5em;
+      }
+  
+      #train-table-rows {
+        font-size: 0.9em;
+       }
