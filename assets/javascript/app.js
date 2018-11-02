@@ -151,8 +151,8 @@ database.ref().once('value', function (dataSnapshot) {
 
 // console.log(trainIDs);
 
-// uncaught syntax error here
-nextArrivalUpdate();
+// uncaught syntax error here - ask TA next class
+// nextArrivalUpdate();
 
 setInterval(function () {
     window.location.reload();
