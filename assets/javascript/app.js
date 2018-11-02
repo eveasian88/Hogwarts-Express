@@ -29,11 +29,13 @@ var update = function () {
     datetime.html(date.format("MMMM Do YYYY, h:mm:ss a"));
 };
 
+
 $(document).ready(function () {
     datetime = $("#current-status")
     update();
     setInterval(update, 1000);
 });
+
 
 // capture button click
 $("#submit").on("click", function (event) {
@@ -69,7 +71,7 @@ $("#submit").on("click", function (event) {
     // arrival time
     var nextArrival = moment(nextArrival).format("hh:mm a");
 
-    // the text here is light green, something is not right
+    // declared variable but it's value isn't read below - ask TA
     var nextArrivalUpdate = function () {
         date = moment(new Date())
         datetime.html(date.format("hh:mm a"));
@@ -104,14 +106,14 @@ $("#submit").on("click", function (event) {
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
 database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function (snapshot) {
 
-    console.log(snapshot.val());
+    // console.log(snapshot.val());
 
-    console.log("Train Name: " + snapshot.val().trainName);
-    console.log("Destination: " + snapshot.val().destination);
-    console.log("First Train: " + snapshot.val().firstTrainHour);
-    console.log("Frequency: " + snapshot.val().frequency);
-    console.log("Next Train: " + snapshot.val().nextArrival);
-    console.log("Minutes Away: " + snapshot.val().minutesAway);
+    // console.log("Train Name: " + snapshot.val().trainName);
+    // console.log("Destination: " + snapshot.val().destination);
+    // console.log("First Train: " + snapshot.val().firstTrainHour);
+    // console.log("Frequency: " + snapshot.val().frequency);
+    // console.log("Next Train: " + snapshot.val().nextArrival);
+    // console.log("Minutes Away: " + snapshot.val().minutesAway);
 
 
     $("#train-table-rows").append("<tr><td>" + snapshot.val().trainName + "</td>" +
@@ -119,16 +121,16 @@ database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", functi
         "<td class='text-center'>" + snapshot.val().frequency + "</td>" +
         "<td class='text-center'>" + snapshot.val().nextArrival + "</td>" +
         "<td class='text-center'>" + snapshot.val().minutesAway + "</td>" + "</td>" +
-        "<td class='text-center'><button class='arrival btn btn-light btn-sm' data-key='" + snapshot.key + "'>X</button></td></tr>");
+        "<td class='text-center'><button class='arrival btn btn-light btn-sm' data-key='" + snapshot.key + "'>x</button></td></tr>");
 
     index++;
 
     // delete function
-    $(document).on("click", ".arrival", function() {
+    $(document).on("click", ".arrival", function () {
         keyref = $(this).attr("data-key");
         database.ref().child(keyref).remove();
         window.location.reload();
-      });
+    });
 
     // handle the errors
 }, function (errorObject) {
@@ -147,4 +149,11 @@ database.ref().once('value', function (dataSnapshot) {
     );
 });
 
-console.log(trainIDs);
+// console.log(trainIDs);
+
+// uncaught syntax error here
+nextArrivalUpdate();
+
+setInterval(function () {
+    window.location.reload();
+}, 60000);
