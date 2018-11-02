@@ -48,9 +48,16 @@ $("#submit").on("click", function (event) {
     firstTrainHour = $("#train-time").val().trim();
     frequency = $("#frequency").val().trim();
 
+
+    var firstTime = "03:30";
+
     // first time pushed back a year to make sure it comes back before current time
-    var firstTimeConverted = moment(firstTrainHour, "hh:mm").subtract(1, "years");
+    var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
     // console.log("FTC: " + firstTimeConverted);
+
+    // current time
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
     // difference between the times
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
@@ -65,18 +72,13 @@ $("#submit").on("click", function (event) {
     // console.log("Minutes away: " + minutesAway);
 
     // next train
-    var nextArrival = moment().add(minutesAway, "minutes");
-    // console.log("Arrival Time: " + moment(nextArrival).format("hh:mm"));
+    var nextTrain = moment().add(minutesAway, "minutes");
+    // console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
 
     // arrival time
-    var nextArrival = moment(nextArrival).format("hh:mm a");
+    var nextArrival = moment(nextTrain).format("hh:mm a");
 
-    // declared variable but it's value isn't read below - ask TA
-    var nextArrivalUpdate = function () {
-        date = moment(new Date())
-        datetime.html(date.format("hh:mm a"));
-    }
-
+    
     // code for handling the push
     database.ref().push({
         trainName: trainName,
@@ -102,20 +104,19 @@ $("#submit").on("click", function (event) {
     return;
 });
 
-
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
 database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function (snapshot) {
 
-    // console.log(snapshot.val());
+    console.log(snapshot.val());
+    console.log("Train Name: " + snapshot.val().trainName);
+    console.log("Destination: " + snapshot.val().destination);
+    console.log("First Train: " + snapshot.val().firstTrainHour);
+    console.log("Frequency: " + snapshot.val().frequency);
+    console.log("Next Train: " + snapshot.val().nextArrival);
+    console.log("Minutes Away: " + snapshot.val().minutesAway);
 
-    // console.log("Train Name: " + snapshot.val().trainName);
-    // console.log("Destination: " + snapshot.val().destination);
-    // console.log("First Train: " + snapshot.val().firstTrainHour);
-    // console.log("Frequency: " + snapshot.val().frequency);
-    // console.log("Next Train: " + snapshot.val().nextArrival);
-    // console.log("Minutes Away: " + snapshot.val().minutesAway);
 
-
+    // adds information to the time table
     $("#train-table-rows").append("<tr><td>" + snapshot.val().trainName + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
         "<td class='text-center'>" + snapshot.val().frequency + "</td>" +
@@ -148,12 +149,30 @@ database.ref().once('value', function (dataSnapshot) {
         }
     );
 });
-
 // console.log(trainIDs);
 
-// uncaught syntax error here - ask TA next class
-// nextArrivalUpdate();
+
+moment();
 
 setInterval(function () {
     window.location.reload();
 }, 60000);
+
+// tracking time in the future but it doesn't work where i added it, need to ask TA before next class
+// var nextArrivalUpdate = function () {
+//     date = moment(new Date())
+//     datetime.html(date.format("hh:mm a"));
+
+//     if (nextArrivalUpdate === nextTrain) {
+//         nextArrival = nextTrain.format("hh:mm a");
+//         minutesAway = nextTrain.diff(moment(), "minutes");
+//     }
+//     else {
+//         var differenceTimes = moment().diff(nextTrain, "minutes");
+//         var tRemainder = differenceTimes % frequency;
+//         minutesAway = frequency - tRemainder;
+
+//         nextArrival = moment().add(minutesAway, "m").format("hh:mm a");
+//     }
+//     console.log("minutesAway:", minutesAway);
+//     console.log("nextArrival:", nextArrival);
