@@ -158,7 +158,7 @@ setInterval(function () {
     window.location.reload();
 }, 60000);
 
-// tracking time in the future but it doesn't work where i added it, need to ask TA before next class
+// tracking time for the train table in the future but it doesn't work where i added it on the top so putting it here for now...
 // var nextArrivalUpdate = function () {
 //     date = moment(new Date())
 //     datetime.html(date.format("hh:mm a"));
@@ -168,8 +168,8 @@ setInterval(function () {
 //         minutesAway = nextTrain.diff(moment(), "minutes");
 //     }
 //     else {
-//         var differenceTimes = moment().diff(nextTrain, "minutes");
-//         var tRemainder = differenceTimes % frequency;
+//         diffTime = moment().diff(nextTrain, "minutes");
+//         tRemainder = diffTime % frequency;
 //         minutesAway = frequency - tRemainder;
 
 //         nextArrival = moment().add(minutesAway, "m").format("hh:mm a");
