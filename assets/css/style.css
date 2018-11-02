@@ -6,7 +6,6 @@ body {
 .jumbotron {
     background-image: url("../images/nightTrain.gif");
     background-repeat: space;
-    /* background-position: left;  */
     background-color: rgb(10, 11, 9);
     height: 220px;
 }
