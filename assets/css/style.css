@@ -33,11 +33,6 @@ h5 {
     color: goldenrod;
 }
 
-/* .btn-danger {
-    background-color: rgb(113, 15, 15);
-    color: goldenrod;
-} */
-
 
 
 /* media queries */
@@ -48,8 +43,11 @@ h5 {
     .jumbotron h1{
         font-size: 2em;
 }
-    h4, h5 {
+    h4 {
       font-size: 1.0em;
+}
+    h5 {
+        font-size: 0.8em;
 }
     #train-table-rows, #submit {
       font-size: 0.7em;
@@ -63,8 +61,11 @@ h5 {
     .jumbotron h1{
         font-size: 2.5em;
 }
-    h4, h5 {
+    h4 {
       font-size: 1.25em;
+}
+    h5 {
+        font-size: 1em;
 }
     #train-table-rows, #submit {
        font-size: 0.8em;
@@ -78,10 +79,10 @@ h5 {
       font-size: 2.75em;
 }
     h4 {
-        font-size: 1.75em;
+        font-size: 1.5em;
 }
     h5 {
-        font-size: 1.5em;
+        font-size: 1.25em;
     }
     #train-table-rows, #submit {
         font-size: 0.9em;
@@ -98,7 +99,7 @@ h5 {
         font-size: 1.75em;
 }
     h5 {
-        font-size: 1.25em;
+        font-size: 1.5em;
     }
     #train-table-rows, #submit {
         font-size: 1em;

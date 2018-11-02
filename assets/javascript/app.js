@@ -94,22 +94,11 @@ $("#submit").on("click", function (event) {
     $("#train-time").val("");
     $("#frequency").val("");
 
+    sessionStorage.clear();
+
     // don't refresh the page
     return;
 });
-
-// delete function
-// var confirmDelete = confirm("Are you sure you want to cancel your wish?");
-
-// if (confirmDelete) {
-//     var entry = $(this).attr("data-index");
-//     database.ref().child(trainIDs[entry]).remove();
-//     window.location.reload();
-// }
-// else {
-//     return false;
-// }
-// });
 
 
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
@@ -127,12 +116,19 @@ database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", functi
 
     $("#train-table-rows").append("<tr><td>" + snapshot.val().trainName + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
-        "<td>" + snapshot.val().frequency + " mins" + "</td>" +
-        "<td>" + snapshot.val().nextArrival + "</td>" +
-        "<td>" + snapshot.val().minutesAway + " mins until arrival" + "</td>" + "</td></tr>");
+        "<td class='text-center'>" + snapshot.val().frequency + "</td>" +
+        "<td class='text-center'>" + snapshot.val().nextArrival + "</td>" +
+        "<td class='text-center'>" + snapshot.val().minutesAway + "</td>" + "</td>" +
+        "<td class='text-center'><button class='arrival btn btn-light btn-sm' data-key='" + snapshot.key + "'>X</button></td></tr>");
 
     index++;
 
+    // delete function
+    $(document).on("click", ".arrival", function() {
+        keyref = $(this).attr("data-key");
+        database.ref().child(keyref).remove();
+        window.location.reload();
+      });
 
     // handle the errors
 }, function (errorObject) {
@@ -152,49 +148,3 @@ database.ref().once('value', function (dataSnapshot) {
 });
 
 console.log(trainIDs);
-
-
-// database.ref().on("child_added", function(childSnapshot) {
-//     var startTimeConverted = moment(childSnapshot.val().startTime, "hh:mm").subtract(1, "years");
-//     var timeDiff = moment().diff(moment(startTimeConverted), "minutes");
-//     var timeRemain = timeDiff % childSnapshot.val().frequency;
-//     var minToArrival = childSnapshot.val().frequency - timeRemain;
-//     var nextArrival = moment().add(minToArrival, "minutes");
-//     var key = childSnapshot.key;
-
-//     // rendering information to DOM to dynamically create new rows
-//     var newrow = $("<tr>");
-//     newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
-//     newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
-//     newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
-//     newrow.append($("<td class='text-center'>" + moment(nextArrival).format("LT") + "</td>"));
-//     newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
-//     newrow.append($("<td class='text-center'><button class='arrival btn btn-light btn-sm' data-key='" + key + "'>X</button></td>"));
-
-//     if (minToArrival < 6) {
-//       newrow.addClass("info");
-//     }
-
-//     $("#train-table-rows").append(newrow);
-
-//   });
-
-//   // delete button option
-//   $(document).on("click", ".arrival", function() {
-//     keyref = $(this).attr("data-key");
-//     database.ref().child(keyref).remove();
-//     window.location.reload();
-//   });
-
-//   // currently shows syntax errors
-// //   currentTime();
-
-//   setInterval(function() {
-//     window.location.reload();
-//   }, 60000);
-
-  // problems that needs to be resolved with this version:
-  // next arrival now shows same time as current time
-  // minutes away shows NaN
-
-  // there's two version at this point: 1. with correct times but no delete button 2. delete button but incorrect times
