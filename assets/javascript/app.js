@@ -48,7 +48,8 @@ $("#submit").on("click", function (event) {
     firstTrainHour = $("#train-time").val().trim();
     frequency = $("#frequency").val().trim();
 
-
+    // time assumptions
+    var frequency = 3;
     var firstTime = "03:30";
 
     // first time pushed back a year to make sure it comes back before current time
@@ -78,7 +79,7 @@ $("#submit").on("click", function (event) {
     // arrival time
     var nextArrival = moment(nextTrain).format("hh:mm a");
 
-    
+
     // code for handling the push
     database.ref().push({
         trainName: trainName,
@@ -115,6 +116,24 @@ database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", functi
     console.log("Next Train: " + snapshot.val().nextArrival);
     console.log("Minutes Away: " + snapshot.val().minutesAway);
 
+    // tracking time table in the future - TRIALS
+    var nextArrivalUpdate = function () {
+        date = moment(new Date());
+        datetime.html(date.format("hh:mm a"));
+
+        if (nextArrivalUpdate === nextTrain) {
+            nextArrival = nextTrain.format("hh:mm a");
+            minutesAway = nextTrain.diff(moment(), "minutes");
+        }
+        else {
+            diffTime = moment().diff(nextTrain, "minutes");
+            tRemainder = diffTime % frequency;
+            minutesAway = frequency - tRemainder;
+            nextArrival = moment().add(minutesAway, "m").format("hh:mm a");
+        }
+        console.log("minutesAway:", minutesAway);
+        console.log("nextArrival:", nextArrival);
+    }
 
     // adds information to the time table
     $("#train-table-rows").append("<tr><td>" + snapshot.val().trainName + "</td>" +
@@ -140,7 +159,7 @@ database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", functi
 
 // gets the train IDs in an array
 database.ref().once('value', function (dataSnapshot) {
-    var key = dataSnapshot.key;
+    key = dataSnapshot.key;
     var trainIndex = 0;
 
     dataSnapshot.forEach(
@@ -149,7 +168,8 @@ database.ref().once('value', function (dataSnapshot) {
         }
     );
 });
-// console.log(trainIDs);
+
+console.log(trainIDs);
 
 
 moment();
@@ -160,7 +180,7 @@ setInterval(function () {
 
 // tracking time for the train table in the future but it doesn't work where i added it on the top so putting it here for now...
 // var nextArrivalUpdate = function () {
-//     date = moment(new Date())
+//     date = moment(new Date());
 //     datetime.html(date.format("hh:mm a"));
 
 //     if (nextArrivalUpdate === nextTrain) {
@@ -176,3 +196,4 @@ setInterval(function () {
 //     }
 //     console.log("minutesAway:", minutesAway);
 //     console.log("nextArrival:", nextArrival);
+// }
