@@ -56,9 +56,9 @@ $("#submit").on("click", function (event) {
     var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
     // console.log("FTC: " + firstTimeConverted);
 
-    // current time
-    var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+    // current time messes with the actual time table, may need to delete
+    // var currentTime = moment();
+    // console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
     // difference between the times
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
@@ -108,13 +108,13 @@ $("#submit").on("click", function (event) {
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
 database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function (snapshot) {
 
-    console.log(snapshot.val());
-    console.log("Train Name: " + snapshot.val().trainName);
-    console.log("Destination: " + snapshot.val().destination);
-    console.log("First Train: " + snapshot.val().firstTrainHour);
-    console.log("Frequency: " + snapshot.val().frequency);
-    console.log("Next Train: " + snapshot.val().nextArrival);
-    console.log("Minutes Away: " + snapshot.val().minutesAway);
+    // console.log(snapshot.val());
+    // console.log("Train Name: " + snapshot.val().trainName);
+    // console.log("Destination: " + snapshot.val().destination);
+    // console.log("First Train: " + snapshot.val().firstTrainHour);
+    // console.log("Frequency: " + snapshot.val().frequency);
+    // console.log("Next Train: " + snapshot.val().nextArrival);
+    // console.log("Minutes Away: " + snapshot.val().minutesAway);
 
     // tracking time table in the future - TRIALS
     var nextArrivalUpdate = function () {
@@ -131,8 +131,8 @@ database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", functi
             minutesAway = frequency - tRemainder;
             nextArrival = moment().add(minutesAway, "m").format("hh:mm a");
         }
-        console.log("minutesAway:", minutesAway);
-        console.log("nextArrival:", nextArrival);
+        // console.log("minutesAway:", minutesAway);
+        // console.log("nextArrival:", nextArrival);
     }
 
     // adds information to the time table
@@ -168,32 +168,10 @@ database.ref().once('value', function (dataSnapshot) {
         }
     );
 });
-
-console.log(trainIDs);
-
+// console.log(trainIDs);
 
 moment();
 
 setInterval(function () {
     window.location.reload();
 }, 60000);
-
-// tracking time for the train table in the future but it doesn't work where i added it on the top so putting it here for now...
-// var nextArrivalUpdate = function () {
-//     date = moment(new Date());
-//     datetime.html(date.format("hh:mm a"));
-
-//     if (nextArrivalUpdate === nextTrain) {
-//         nextArrival = nextTrain.format("hh:mm a");
-//         minutesAway = nextTrain.diff(moment(), "minutes");
-//     }
-//     else {
-//         diffTime = moment().diff(nextTrain, "minutes");
-//         tRemainder = diffTime % frequency;
-//         minutesAway = frequency - tRemainder;
-
-//         nextArrival = moment().add(minutesAway, "m").format("hh:mm a");
-//     }
-//     console.log("minutesAway:", minutesAway);
-//     console.log("nextArrival:", nextArrival);
-// }
