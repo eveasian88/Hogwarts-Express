@@ -105,13 +105,13 @@ $("#submit").on("click", function (event) {
 // firebase watcher + initial loader: code behaves similarly to .on("child_added")
 database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", function (snapshot) {
 
-    console.log(snapshot.val());
-    console.log("Train Name: " + snapshot.val().trainName);
-    console.log("Destination: " + snapshot.val().destination);
-    console.log("First Train: " + snapshot.val().firstTrainHour);
-    console.log("Frequency: " + snapshot.val().frequency);
-    console.log("Next Train: " + snapshot.val().nextArrival);
-    console.log("Minutes Away: " + snapshot.val().minutesAway);
+    // console.log(snapshot.val());
+    // console.log("Train Name: " + snapshot.val().trainName);
+    // console.log("Destination: " + snapshot.val().destination);
+    // console.log("First Train: " + snapshot.val().firstTrainHour);
+    // console.log("Frequency: " + snapshot.val().frequency);
+    // console.log("Next Train: " + snapshot.val().nextArrival);
+    // console.log("Minutes Away: " + snapshot.val().minutesAway);
 
     // bonus: tracking time table in the future - TRIALS not working yet
     // nextArrivalUpdate = function () {
@@ -131,7 +131,7 @@ database.ref().orderByChild("dateAdded").limitToLast(8).on("child_added", functi
     //    console.log("minutesAway:", minutesAway);
     //     console.log("nextArrival:", nextArrival);
 
-    //     moment ();
+    //     nextArrivalUpdate ();
     //     setInterval(function() {
     //         window.location.reload();
     //     });
@@ -170,4 +170,4 @@ database.ref().once('value', function (dataSnapshot) {
         }
     );
 });
-console.log(trainIDs);
+// console.log(trainIDs);
