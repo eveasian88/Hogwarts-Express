@@ -4,5 +4,3 @@ Cast your wish and let Hogwarts Express take you anywhere in the Muggle World! I
 
 ## Technologies Utilized
 HTML5 • Bootstrap4 • CSS3 • JavaScript • jQuery • Firebase • Moment.js
-
-https://eveasian88.github.io/Hogwarts-Express/
